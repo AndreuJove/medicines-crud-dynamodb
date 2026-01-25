@@ -15,6 +15,41 @@ services:
     networks:
       - backend
     restart: unless-stopped
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    user: root
+    container_name: dynamodb_local
+    ports:
+      - "8000:8000"
+    command: "-jar /home/dynamodblocal/DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    volumes:
+      - "./dynamodb:/home/dynamodblocal/data"
+    networks:
+      - backend
+    working_dir: /home/dynamodblocal
+  dynamodb-seed:
+    image: amazon/aws-cli
+    depends_on:
+      - dynamodb-local
+    environment:
+      AWS_ACCESS_KEY_ID: "local"
+      AWS_SECRET_ACCESS_KEY: "local"
+      AWS_REGION: "us-east-1"
+    entrypoint: /bin/sh
+    networks:
+      - backend
+    command: >
+      -c "aws dynamodb create-table \
+            --endpoint-url http://dynamodb-local:8000 \
+            --table-name Medicines \
+            --attribute-definitions \
+                AttributeName=drug_name,AttributeType=S \
+                AttributeName=target,AttributeType=S \
+            --key-schema \
+                AttributeName=drug_name,KeyType=HASH \
+                AttributeName=target,KeyType=RANGE \
+            --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5"
+
 
 networks:
   backend:
