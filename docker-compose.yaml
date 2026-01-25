@@ -1,0 +1,21 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: chalice_api
+    volumes:
+      - ./src:/code/src
+    ports:
+      - '4000:4000'
+    environment:
+      - STAGE=local
+      - PYTHONDEVMODE=1
+      - PYTHONDONTWRITEBYTECODE=1
+    networks:
+      - backend
+    restart: unless-stopped
+
+networks:
+  backend:
+    name: project_network
