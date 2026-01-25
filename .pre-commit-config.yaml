@@ -1,0 +1,41 @@
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    -   id: detect-private-key
+    -   id: detect-aws-credentials
+-   repo: local
+    hooks:
+    -   id: Isort formatter
+        name: Isort formatter
+        entry: ./scripts/bootstrap.sh isort
+        language: script
+
+    -   id: Black formatter
+        name: Black formatter
+        entry: ./scripts/bootstrap.sh black
+        language: script
+
+    -   id: Pylint
+        name: Pylint
+        entry: ./scripts/bootstrap.sh pylint
+        language: script
+
+    -   id: flake8
+        name: flake8
+        entry: ./scripts/bootstrap.sh flake8
+        language: script
+
+    -   id: mypy
+        name: mypy
+        entry: ./scripts/bootstrap.sh mypy
+        language: script
+
+    -   id: coverage
+        name: coverage
+        entry: ./scripts/bootstrap.sh coverage
+        language: script
