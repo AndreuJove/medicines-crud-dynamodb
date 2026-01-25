@@ -1,4 +1,23 @@
 services:
+  api-test:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.test
+    container_name: chalice_api
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./src:/code/src
+    environment:
+      - STAGE=local
+      - PYTHONDEVMODE=1
+      - PYTHONDONTWRITEBYTECODE=1
+    networks:
+      - backend
+    depends_on:
+      - dynamodb-local
+      - dynamodb-seed
+    command: tail -f /dev/null
   dynamodb-local:
     image: amazon/dynamodb-local:latest
     user: root
@@ -7,7 +26,7 @@ services:
       - "8000:8000"
     command: "-jar /home/dynamodblocal/DynamoDBLocal.jar -sharedDb -dbPath ./data"
     volumes:
-      - "./dynamodb:/home/dynamodblocal/data"
+      - "./dynamodb-test:/home/dynamodblocal/data"
     networks:
       - backend
     working_dir: /home/dynamodblocal
@@ -22,7 +41,6 @@ services:
     entrypoint: /bin/sh
     networks:
       - backend
-    restart: on-failure:2
     command: >
       -c "aws dynamodb create-table \
             --endpoint-url http://dynamodb-local:8000 \
