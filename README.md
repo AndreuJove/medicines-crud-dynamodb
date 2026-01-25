@@ -1,8 +1,6 @@
 
 # medicines-crud
-
-# backend-template-api
-A template to contain the bases of any API (lambda based) project in Python using [Chalice](https://github.com/aws/chalice).
+An application about medicines API (AWS Lambda based) Python using [Chalice](https://github.com/aws/chalice).
 
 ### Requirements:
 
