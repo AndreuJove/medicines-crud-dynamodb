@@ -38,17 +38,17 @@ An application about medicines API (AWS Lambda based) Python using [Chalice](htt
 
 - `make debug_tests`: opens a sh to run tests with breakpoints() and also mounts a volume to change code without restarting the docker container.
 
-- `black`: executes black in all python code of the project.
+- `make black`: executes black in all python code of the project.
 
-- `isort`: executes isort in all python code of the project.
+- `make isort`: executes isort in all python code of the project.
 
-- `flake8`: executes flake8 in all python code of the project.
+- `make flake8`: executes flake8 in all python code of the project.
 
-- `pylint`: executes pylint in all python code of the project.
+- `make pylint`: executes pylint in all python code of the project.
 
-- `mypy`: executes mypy in all python code of the project.
+- `make mypy`: executes mypy in all python code of the project.
 
-- `coverage`: executes coverage in all python code of the project.
+- `make coverage`: executes coverage in all python code of the project.
 
 
 ### Using Docker-compose:
