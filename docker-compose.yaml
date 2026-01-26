@@ -50,7 +50,6 @@ services:
                 AttributeName=target,KeyType=RANGE \
             --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5"
 
-
 networks:
   backend:
     name: project_network

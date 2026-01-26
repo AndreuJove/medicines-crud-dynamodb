@@ -34,10 +34,6 @@ An application about medicines API (AWS Lambda based) Python using [Chalice](htt
 
 - `make build`: builds the server image.
 
-- `make run_tests`: runs all tests directly.
-
-- `make debug_tests`: opens a sh to run tests with breakpoints() and also mounts a volume to change code without restarting the docker container.
-
 - `make black`: executes black in all python code of the project.
 
 - `make isort`: executes isort in all python code of the project.
@@ -61,18 +57,15 @@ docker-compose up
 ### Using Docker:
 
 
-#### Server:
+#### Testing and development:
 ```bash
-docker build . -t test-chalice -f docker/Dockerfile
-docker run -p 4000:4000 test-chalice
+docker-compose -f docker-compose-test.yaml up
+docker exec -it <container-id> pytest
+
 ```
 
-```bash
-docker build . -t run-tests -f docker/Dockerfile.test
-docker run run-tests
-```
 
-DEBUG:
+#### Fixing issues with docker:
 ```bash
-docker run -v $(pwd)/tests:/code/tests $(pwd)/src:/code/src -it run-tests sh
+docker system prune -af --volumes
 ```

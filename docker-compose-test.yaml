@@ -8,10 +8,11 @@ services:
       - '4000:4000'
     volumes:
       - ./src:/code/src
+      - ./tests:/code/tests
     environment:
-      - STAGE=local
-      - PYTHONDEVMODE=1
-      - PYTHONDONTWRITEBYTECODE=1
+      AWS_ACCESS_KEY_ID: "local"
+      AWS_SECRET_ACCESS_KEY: "local"
+      AWS_REGION: "us-east-1"
     networks:
       - backend
     depends_on:
@@ -41,6 +42,7 @@ services:
     entrypoint: /bin/sh
     networks:
       - backend
+    restart: on-failure:2
     command: >
       -c "aws dynamodb create-table \
             --endpoint-url http://dynamodb-local:8000 \
