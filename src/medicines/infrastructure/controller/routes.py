@@ -20,10 +20,11 @@ def health():
 @medicine_routes.route("/medicines/{drug_name}", methods=["GET"])
 def get_medicine(drug_name: str):
 
+    breakpoint()
     dynamo_db_repository = DynamodbMedicineRepository(dynamo_db_client)
     medicine = get_medicine_by_drug_name(dynamo_db_repository, drug_name)
 
     if not medicine:
         return Response(body={'Status': 'Not found'}, status_code=404)
 
-    return Response(body={'drug_name': 'TestDrug_001', 'target': 'IntegrationTest'}, status_code=200)
+    return Response(body=medicine, status_code=200)
